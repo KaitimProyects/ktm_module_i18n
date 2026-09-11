@@ -1,0 +1,1 @@
+Sincroniza titulo, subtitulo y descripcion por idioma hacia ir.module.module
