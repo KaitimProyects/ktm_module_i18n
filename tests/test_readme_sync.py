@@ -14,8 +14,8 @@ class TestReadmeSync(TransactionCase):
         """_read_readme_translation must use the non-deprecated file_open API,
         for every mapped filename/extension (.txt and .rst alike).
 
-        `base` ships no `i18n_readme/` directory, so this exercises the
-        "module without i18n_readme" path while proving no DeprecationWarning
+        `base` ships no `i18n_metadata/` directory, so this exercises the
+        "module without i18n_metadata" path while proving no DeprecationWarning
         escapes (the get_resource_path bug this module fixes), across all
         three extensions the field mapping produces.
         """
@@ -29,7 +29,7 @@ class TestReadmeSync(TransactionCase):
                 self.assertIsNone(result)
 
     def test_ignores_module_without_readme_dir(self):
-        """A module with no i18n_readme/<lang>/<filename> returns None, not an error."""
+        """A module with no i18n_metadata/<lang>/<filename> returns None, not an error."""
         module = self.env['ir.module.module']
         result = module._read_readme_translation('web', 'es_MX', 'description.rst')
         self.assertIsNone(result)
@@ -191,7 +191,7 @@ class TestReadmeSync(TransactionCase):
     def test_end_to_end_via_temp_addons_dir(self):
         """Full pipeline: real files on disk, no mocked seams.
 
-        Uses `file_open_temporary_directory` so a real `base/i18n_readme/
+        Uses `file_open_temporary_directory` so a real `base/i18n_metadata/
         es_MX/{name.txt,summary.txt,description.rst}` can be planted on disk
         without touching the actual `base` module directory, then runs the
         unpatched `_sync_readme_translations` end to end.
@@ -202,7 +202,7 @@ class TestReadmeSync(TransactionCase):
         description_content = 'Descripcion end-to-end\n\ncon varias lineas\n'
 
         with file_open_temporary_directory(self.env) as module_dir:
-            readme_dir = os.path.join(module_dir, 'base', 'i18n_readme', 'es_MX')
+            readme_dir = os.path.join(module_dir, 'base', 'i18n_metadata', 'es_MX')
             os.makedirs(readme_dir)
             with open(os.path.join(readme_dir, 'name.txt'), 'w', encoding='utf-8') as name_file:
                 name_file.write(shortdesc_content)

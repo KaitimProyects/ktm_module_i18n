@@ -9,8 +9,8 @@ Sincroniza contenido por idioma hacia tres campos de ``ir.module.module`` —
 ``shortdesc`` (titulo en Aplicaciones), ``summary`` (subtitulo en
 Aplicaciones) y ``description`` (cuerpo en Aplicaciones) — para cualquier
 modulo instalado, en cada construccion del registro. Un modulo se suma
-simplemente publicando un directorio ``i18n_readme/<codigo_idioma>/`` por
-cada idioma que quiera traducir (por ejemplo ``i18n_readme/es_MX/``), con
+simplemente publicando un directorio ``i18n_metadata/<codigo_idioma>/`` por
+cada idioma que quiera traducir (por ejemplo ``i18n_metadata/es_MX/``), con
 hasta tres archivos independientemente opcionales adentro: ``name.txt`` ->
 ``shortdesc``, ``summary.txt`` -> ``summary``, ``description.rst`` ->
 ``description``. Sin archivos de datos, sin paso manual, y sin depender de

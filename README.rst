@@ -8,8 +8,8 @@ What it provides
 Syncs per-language content into three ``ir.module.module`` fields — ``shortdesc``
 (Apps title), ``summary`` (Apps subtitle), and ``description`` (Apps body) — for
 any installed module, on every registry build. A module opts in simply by
-shipping an ``i18n_readme/<lang_code>/`` directory per language it wants to
-translate (for example ``i18n_readme/es_MX/``), with up to three independently
+shipping an ``i18n_metadata/<lang_code>/`` directory per language it wants to
+translate (for example ``i18n_metadata/es_MX/``), with up to three independently
 optional files inside it: ``name.txt`` -> ``shortdesc``, ``summary.txt`` ->
 ``summary``, ``description.rst`` -> ``description``. No data files, no manual
 step, and no dependency on ``.po`` translation of these fields, which cannot be
@@ -31,7 +31,7 @@ Configuration
 
 Nothing to configure. Any module that wants translated Apps-page title,
 subtitle, and/or description adds this module to its own ``depends`` (see
-*Gotchas*) and ships ``i18n_readme/<lang_code>/{name.txt,summary.txt,
+*Gotchas*) and ships ``i18n_metadata/<lang_code>/{name.txt,summary.txt,
 description.rst}`` files next to its own ``README``/manifest. Each file is
 independently optional: shipping only ``summary.txt`` translates just the
 subtitle for that language, leaving title and description in the source
@@ -66,7 +66,7 @@ Gotchas and maintenance notes
   stray whitespace-only ``name.txt`` never blanks an already-translated
   title.
 - **No warning noise.** Reading falls back cleanly (``None``) for any module
-  that has no ``i18n_readme/<lang>/<file>``, via ``tools.file_open`` wrapped
+  that has no ``i18n_metadata/<lang>/<file>``, via ``tools.file_open`` wrapped
   in ``try/except FileNotFoundError`` — never
   ``get_resource_path``/``get_module_resource``, which fire a
   ``DeprecationWarning`` per call.

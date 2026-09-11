@@ -6,11 +6,11 @@ from odoo import models, tools
 class IrModuleModule(models.Model):
     _inherit = 'ir.module.module'
 
-    README_I18N_DIR = 'i18n_readme'
+    MODULE_I18N_DIR = 'i18n_metadata'
 
     def _get_readme_translation_fields(self):
         """Map each translatable field to the file that feeds it, under
-        `i18n_readme/<lang>/`.
+        `i18n_metadata/<lang>/`.
 
         A method, not a class-attribute dict: a child module can extend the
         mapping with `{**super()._get_readme_translation_fields(), 'x': 'x.txt'}`
@@ -27,7 +27,7 @@ class IrModuleModule(models.Model):
         }
 
     def _read_readme_translation(self, module_name, lang, filename):
-        """Return the content of <module_name>/i18n_readme/<lang>/<filename>,
+        """Return the content of <module_name>/i18n_metadata/<lang>/<filename>,
         or None.
 
         Uses `tools.file_open` (the non-deprecated API, `env=self.env` so it
@@ -41,7 +41,7 @@ class IrModuleModule(models.Model):
         would raise `ValueError` from `tools.file_open`/`file_path` the
         moment a `.txt` file (`name.txt`/`summary.txt`) is read.
         """
-        relative_path = f'{module_name}/{self.README_I18N_DIR}/{lang}/{filename}'
+        relative_path = f'{module_name}/{self.MODULE_I18N_DIR}/{lang}/{filename}'
         ext = os.path.splitext(filename)[1]
         try:
             with tools.file_open(relative_path, 'r', filter_ext=(ext,), env=self.env) as readme_file:
@@ -83,7 +83,7 @@ class IrModuleModule(models.Model):
         return self.sudo().search([('state', '=', 'installed')])
 
     def _sync_readme_translations(self):
-        """Copy each installed module's i18n_readme/<lang>/<file> content into
+        """Copy each installed module's i18n_metadata/<lang>/<file> content into
         its translated `shortdesc`/`summary`/`description`, one ORM write per
         changed (module, lang) pair.
 
